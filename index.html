@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Directory Downloader</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i data-feather="github"></i>
+                <h1>GitHub Directory Downloader</h1>
+            </div>
+            <p class="subtitle">Unduh folder spesifik dari repositori GitHub sebagai file ZIP.</p>
+        </header>
+
+        <main class="card">
+            <div class="input-group">
+                <label for="github-url">URL Folder GitHub</label>
+                <div class="input-wrapper">
+                    <input type="text" id="github-url" placeholder="https://github.com/OWNER/REPO/tree/BRANCH/PATH" autocomplete="off">
+                    <i data-feather="link" class="input-icon"></i>
+                </div>
+                <p class="hint">Contoh: https://github.com/OCA/web/tree/18.0/web_responsive</p>
+            </div>
+
+            <button id="download-btn" class="btn-primary">
+                <span class="btn-text">Unduh ZIP</span>
+                <i data-feather="download"></i>
+                <div class="spinner hidden"></div>
+            </button>
+
+            <div id="status-container" class="hidden">
+                <div class="status-header">
+                    <span id="status-text">Menyiapkan...</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress-fill" style="width: 0%"></div>
+                </div>
+                <div id="file-status" class="file-status">Menghubungi GitHub API...</div>
+            </div>
+        </main>
+
+        <section class="info-section">
+            <div class="info-card">
+                <i data-feather="zap"></i>
+                <h3>Cepat & Lokal</h3>
+                <p>Proses ZIP dilakukan langsung di browser Anda. Tidak ada data yang dikirim ke server eksternal.</p>
+            </div>
+            <div class="info-card">
+                <i data-feather="shield"></i>
+                <h3>Privasi Terjaga</h3>
+                <p>Kami hanya menggunakan GitHub API untuk mengambil konten publik secara anonim.</p>
+            </div>
+        </section>
+
+        <section class="details-section card">
+            <div class="details-grid">
+                <div class="details-column">
+                    <h3><i data-feather="list"></i> Fitur Utama</h3>
+                    <ul>
+                        <li><strong>Tanpa Instalasi:</strong> Berjalan langsung di browser tanpa perlu Git.</li>
+                        <li><strong>Selektif:</strong> Unduh hanya folder yang Anda butuhkan, bukan seluruh repo.</li>
+                        <li><strong>Ringan:</strong> Menggunakan struktur Git Trees untuk pengambilan data cepat.</li>
+                        <li><strong>Kompresi Lokal:</strong> Pembuatan ZIP dilakukan di sisi klien (JSZip).</li>
+                    </ul>
+                </div>
+                <div class="details-column">
+                    <h3><i data-feather="alert-circle"></i> Catatan Penting</h3>
+                    <ul>
+                        <li>Hanya mendukung <strong>Repositori Publik</strong>.</li>
+                        <li>Limit API GitHub: <strong>60 request/jam</strong> (Unauthenticated).</li>
+                        <li>Kecepatan tergantung pada jumlah file dan koneksi internet Anda.</li>
+                        <li>Format URL harus menyertakan bagian <code>/tree/BRANCH/...</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Dibuat dengan ✨ vibe coding & segelas kopi.</p>
+            <p class="rate-limit-info">Limit GitHub API: 60 request/jam (Tanpa Token).</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
