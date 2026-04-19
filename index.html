@@ -21,12 +21,12 @@
                 <i data-feather="github"></i>
                 <h1>GitHub Directory Downloader</h1>
             </div>
-            <p class="subtitle">Unduh folder spesifik dari repositori GitHub sebagai file ZIP.</p>
+            <p class="subtitle">Nggak perlu klon satu repo penuh. Cukup pilih folder yang kamu mau, dan sedot langsung jadi ZIP!</p>
         </header>
 
         <main class="card">
             <div class="input-group">
-                <label for="github-url">URL Folder GitHub</label>
+                <label for="github-url">Tempel URL folder GitHub di sini</label>
                 <div class="input-wrapper">
                     <input type="text" id="github-url" placeholder="https://github.com/OWNER/REPO/tree/BRANCH/PATH" autocomplete="off">
                     <i data-feather="link" class="input-icon"></i>
@@ -42,13 +42,13 @@
 
             <div id="status-container" class="hidden">
                 <div class="status-header">
-                    <span id="status-text">Menyiapkan...</span>
+                    <span id="status-text">Lagi nyiapin...</span>
                     <span id="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar">
                     <div id="progress-fill" style="width: 0%"></div>
                 </div>
-                <div id="file-status" class="file-status">Menghubungi GitHub API...</div>
+                <div id="file-status" class="file-status">Hubungin GitHub API...</div>
             </div>
         </main>
 
@@ -56,46 +56,47 @@
             <div class="info-card">
                 <i data-feather="zap"></i>
                 <h3>Cepat & Lokal</h3>
-                <p>Proses ZIP dilakukan langsung di browser Anda. Tidak ada data yang dikirim ke server eksternal.</p>
+                <p>Proses ZIP dilakukan langsung di browser kamu. Data nggak bakal dikirim ke server mana pun.</p>
             </div>
             <div class="info-card">
                 <i data-feather="shield"></i>
-                <h3>Privasi Terjaga</h3>
-                <p>Kami hanya menggunakan GitHub API untuk mengambil konten publik secara anonim.</p>
+                <h3>Privasi Aman</h3>
+                <p>Cuma pakai GitHub API buat ambil konten publik secara anonim tanpa perlu login atau token.</p>
             </div>
         </section>
 
         <section class="details-section card">
             <div class="details-grid">
                 <div class="details-column">
-                    <h3><i data-feather="list"></i> Fitur Utama</h3>
+                    <h3><i data-feather="list"></i> Kenapa pakai ini?</h3>
                     <ul>
-                        <li><strong>Tanpa Instalasi:</strong> Berjalan langsung di browser tanpa perlu Git.</li>
-                        <li><strong>Selektif:</strong> Unduh hanya folder yang Anda butuhkan, bukan seluruh repo.</li>
-                        <li><strong>Ringan:</strong> Menggunakan struktur Git Trees untuk pengambilan data cepat.</li>
-                        <li><strong>Kompresi Lokal:</strong> Pembuatan ZIP dilakukan di sisi klien (JSZip).</li>
+                        <li><strong>Nggak Perlu Instal:</strong> Langsung jalan di browser, nggak butuh Git atau aplikasi lain.</li>
+                        <li><strong>Pilih Folder Aja:</strong> Unduh cuma bagian yang kamu butuhin, nggak perlu tarik satu repo.</li>
+                        <li><strong>Proses Ngebut:</strong> Pakai teknologi Git Trees biar ambil datanya sat-set.</li>
+                        <li><strong>ZIP Instan:</strong> File ZIP dibuat otomatis di perangkat kamu pakai JSZip.</li>
                     </ul>
                 </div>
                 <div class="details-column">
-                    <h3><i data-feather="alert-circle"></i> Catatan Penting</h3>
+                    <h3><i data-feather="alert-circle"></i> Hal yang perlu diingat</h3>
                     <ul>
-                        <li>Hanya mendukung <strong>Repositori Publik</strong>.</li>
-                        <li>Limit API GitHub: <strong>60 request/jam</strong> (Unauthenticated).</li>
-                        <li>Kecepatan tergantung pada jumlah file dan koneksi internet Anda.</li>
-                        <li>Format URL harus menyertakan bagian <code>/tree/BRANCH/...</code></li>
+                        <li>Cuma bisa buat <strong>Repositori Publik</strong> ya.</li>
+                        <li>Batas API GitHub: <strong>60 request/jam</strong> (karena tanpa login).</li>
+                        <li>Kecepatan unduh tergantung internet kamu dan jumlah filenya.</li>
+                        <li>URL-nya harus lengkap, ada bagian <code>/tree/BRANCH/...</code> nya.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <footer>
-            <p>Dibuat dengan ✨ vibe coding & segelas kopi.</p>
-            <p class="rate-limit-info">
+            <p>Dibuat pake ✨ vibe coding & segelas kopi.</p>
+            <div class="footer-info">
                 <a href="https://github.com/askaerlangga/github-directory-downloader" target="_blank" rel="noopener noreferrer">
-                    <i data-feather="github" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i>Lihat Repositori di GitHub
-                </a> 
-                • Limit GitHub API: 60 request/jam (Tanpa Token).
-            </p>
+                    <i data-feather="github"></i> Buka Source Code
+                </a>
+                <span class="footer-sep">•</span>
+                <span>Limit API: 60 request/jam</span>
+            </div>
         </footer>
     </div>
 

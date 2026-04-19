@@ -15,13 +15,13 @@ const zip = new JSZip();
 downloadBtn.addEventListener('click', async () => {
     const url = urlInput.value.trim();
     if (!url) {
-        alert('Silakan masukkan URL GitHub!');
+        alert('Masukkan URL GitHub-nya dulu ya!');
         return;
     }
 
     const githubData = parseGitHubUrl(url);
     if (!githubData) {
-        alert('URL tidak valid! Gunakan format: https://github.com/OWNER/REPO/tree/BRANCH/PATH');
+        alert('URL-nya nggak valid nih! Gunakan format: https://github.com/OWNER/REPO/tree/BRANCH/PATH');
         return;
     }
 
@@ -36,9 +36,9 @@ downloadBtn.addEventListener('click', async () => {
         const response = await fetch(treeUrl);
         
         if (!response.ok) {
-            if (response.status === 403) throw new Error('API Rate Limit tercapai. Coba lagi nanti.');
-            if (response.status === 404) throw new Error('Repositori atau Branch tidak ditemukan.');
-            throw new Error('Gagal mengambil struktur data.');
+            if (response.status === 403) throw new Error('Batas request API sudah habis. Coba lagi nanti ya.');
+            if (response.status === 404) throw new Error('Repo atau Branch nggak ketemu.');
+            throw new Error('Gagal ambil struktur data.');
         }
 
         const data = await response.json();
@@ -50,7 +50,7 @@ downloadBtn.addEventListener('click', async () => {
         );
 
         if (filesToDownload.length === 0) {
-            throw new Error('Folder kosong atau tidak ditemukan.');
+            throw new Error('Foldernya kosong atau nggak ketemu.');
         }
 
         updateStatus(`Ditemukan ${filesToDownload.length} file. Mulai mengunduh...`, 10);
@@ -85,17 +85,17 @@ downloadBtn.addEventListener('click', async () => {
         await Promise.all(downloadPromises);
 
         // 4. Generate and Save ZIP
-        updateStatus('Membuat file ZIP...', 95);
+        updateStatus('Lagi bikin file ZIP...', 95);
         const content = await zip.generateAsync({ type: 'blob' });
         const folderName = path.split('/').pop() || 'repo-folder';
         saveAs(content, `${folderName}.zip`);
 
         updateStatus('Selesai!', 100);
-        fileStatus.textContent = 'Unduhan berhasil dimulai.';
+        fileStatus.textContent = 'ZIP kamu sudah mulai diunduh.';
         setTimeout(stopLoading, 2000);
 
     } catch (error) {
-        alert('Terjadi kesalahan: ' + error.message);
+        alert('Ada masalah nih: ' + error.message);
         stopLoading();
     }
 });
@@ -123,7 +123,7 @@ function updateStatus(text, percent) {
 
 function startLoading() {
     downloadBtn.disabled = true;
-    btnText.textContent = 'Memproses...';
+    btnText.textContent = 'Lagi diproses...';
     btnIcon.classList.add('hidden');
     spinner.classList.remove('hidden');
     statusContainer.classList.remove('hidden');
