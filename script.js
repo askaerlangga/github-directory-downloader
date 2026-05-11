@@ -8,6 +8,29 @@ const fileStatus = document.getElementById('file-status');
 const btnText = downloadBtn.querySelector('.btn-text');
 const btnIcon = downloadBtn.querySelector('[data-feather="download"]');
 const spinner = downloadBtn.querySelector('.spinner');
+const apiLimitInfo = document.getElementById('api-limit-info');
+
+// Get API Limit on Load
+updateApiLimit();
+
+async function updateApiLimit() {
+    try {
+        const response = await fetch('https://api.github.com/rate_limit');
+        if (response.ok) {
+            const data = await response.json();
+            const { remaining, limit } = data.rate;
+            apiLimitInfo.textContent = `Limit API: ${remaining}/${limit} tersisa`;
+            
+            if (remaining === 0) {
+                apiLimitInfo.style.color = '#ef4444';
+            } else {
+                apiLimitInfo.style.color = '';
+            }
+        }
+    } catch (error) {
+        console.error('Gagal ambil data limit:', error);
+    }
+}
 
 downloadBtn.addEventListener('click', async () => {
     const url = urlInput.value.trim();
@@ -95,10 +118,14 @@ downloadBtn.addEventListener('click', async () => {
         updateStatus('Selesai!', 100);
         fileStatus.textContent = 'ZIP kamu sudah mulai diunduh.';
         setTimeout(stopLoading, 2000);
+        
+        // Refresh limit info after download
+        updateApiLimit();
 
     } catch (error) {
         alert('Ada masalah nih: ' + error.message);
         stopLoading();
+        updateApiLimit();
     }
 });
 
