@@ -9,9 +9,6 @@ const btnText = downloadBtn.querySelector('.btn-text');
 const btnIcon = downloadBtn.querySelector('[data-feather="download"]');
 const spinner = downloadBtn.querySelector('.spinner');
 
-// Initialize JSZip
-const zip = new JSZip();
-
 downloadBtn.addEventListener('click', async () => {
     const url = urlInput.value.trim();
     if (!url) {
@@ -28,8 +25,12 @@ downloadBtn.addEventListener('click', async () => {
     startLoading();
 
     try {
+        // Initialize JSZip for this download session
+        const zip = new JSZip();
+
         updateStatus('Menghubungi GitHub API...', 5);
         const { owner, repo, branch, path } = githubData;
+        const folderName = path.split('/').pop() || 'repo-folder';
 
         // 1. Get the tree from GitHub API
         const treeUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
@@ -71,7 +72,9 @@ downloadBtn.addEventListener('click', async () => {
                 let relativePath = file.path.substring(path.length);
                 if (relativePath.startsWith('/')) relativePath = relativePath.substring(1);
                 
-                zip.file(relativePath, blob);
+                // Wrap files inside the parent folder
+                const zipPath = `${folderName}/${relativePath}`;
+                zip.file(zipPath, blob);
                 
                 downloadedCount++;
                 const percent = Math.round((downloadedCount / totalFiles) * 80) + 10;
@@ -87,7 +90,6 @@ downloadBtn.addEventListener('click', async () => {
         // 4. Generate and Save ZIP
         updateStatus('Lagi bikin file ZIP...', 95);
         const content = await zip.generateAsync({ type: 'blob' });
-        const folderName = path.split('/').pop() || 'repo-folder';
         saveAs(content, `${folderName}.zip`);
 
         updateStatus('Selesai!', 100);
